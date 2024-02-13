@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, createRoutesFromElements, Route, Form } from "react-router-dom";
+import App from './App'
+import Index from './pages/Index'
+import Show from "./pages/Show";
+import { cheeseLoader, sliceLoader } from "./loaders";
+import { updateAction, createAction, deleteAction } from "./actions";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const router = createBrowserRouter(
+    createRoutesFromElements(
+        <Route path='/' element={<App />}>
+            <Route path="" element={<Index />} loader={cheeseLoader}/>
+            <Route path=':id' element={<Show />} loader={sliceLoader}/>
+            <Route path='create' action={createAction}/>
+            <Route path='update/:id' action={updateAction} />
+            <Route path='delete/:id' action={deleteAction}/>
+            
+        </Route>
+    )
+)
 
-export default App;
+export default router
